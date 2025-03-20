@@ -1,4 +1,4 @@
-# Rebalancr Backend
+# HelenusAI Backend
 
 ## Installation Guide
 
@@ -48,8 +48,8 @@ curl -sSL https://install.python-poetry.org | python3 -
 ### Step 4: Install project dependencies
 ```bash
 # Clone the repository (if you haven't already)
-git clone https://github.com/yourusername/rebalancr.git
-cd rebalancr/backend
+git clone https://github.com/degencodebeast/helenusAI.git
+cd src/backend
 
 # Install dependencies
 poetry install

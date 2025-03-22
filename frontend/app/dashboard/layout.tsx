@@ -1,35 +1,16 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import { auth } from "../(auth)/auth";
-import { cookies } from "next/headers";
-import Script from "next/script";
+import type React from "react"
+import { Sidebar } from "@/components/dashboard/sidebar"
 
-export const experimental_ppr = true;
-
-export default async function RootLayout({
+export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const [session, cookieStore] = await Promise.all([auth(), cookies()]);
-
-  const isCollapsed = cookieStore.get("sidebar:state")?.value !== "true";
-
   return (
-    <html lang="en">
-      <head>{/* Add any head elements here */}</head>
-      <body className="overflow-hidden">
-        <Script
-          src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"
-          strategy="beforeInteractive"
-        />
-        <SidebarProvider defaultOpen={!isCollapsed}>
-          <div className="flex h-screen">
-            <AppSidebar user={session?.user ?? undefined} />
-            <main className="flex-1 overflow-hidden p-6">{children}</main>
-          </div>
-        </SidebarProvider>
-      </body>
-    </html>
-  );
+    <div className="min-h-screen bg-brand-gray/30 flex">
+      <Sidebar />
+      <div className="flex-1 flex flex-col min-h-screen">{children}</div>
+    </div>
+  )
 }
+

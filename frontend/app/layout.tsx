@@ -1,65 +1,38 @@
-import type { Metadata } from "next";
-import { Toaster } from "sonner";
-import { ThemeProvider } from "@/components/theme-provider";
-import { PrivyAuthProvider } from "@/components/privyAuthProvider";
-import "./globals.css";
+import type React from "react"
+import { Metadata } from "next/types"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+})
 
 export const metadata: Metadata = {
-  title: "Helenus",
-  description: "AI-Powered Yield Optimization. Maximum Gains, Minimum Risk.",
-};
-
-export const viewport = {
-  maximumScale: 1,
-};
-
-const LIGHT_THEME_COLOR = "hsl(0 0% 100%)";
-const DARK_THEME_COLOR = "hsl(240deg 10% 3.92%)";
-const THEME_COLOR_SCRIPT = `\
-(function() {
-  var html = document.documentElement;
-  var meta = document.querySelector('meta[name="theme-color"]');
-  if (!meta) {
-    meta = document.createElement('meta');
-    meta.setAttribute('name', 'theme-color');
-    document.head.appendChild(meta);
-  }
-  function updateThemeColor() {
-    var isDark = html.classList.contains('dark');
-    meta.setAttribute('content', isDark ? '${DARK_THEME_COLOR}' : '${LIGHT_THEME_COLOR}');
-  }
-  var observer = new MutationObserver(updateThemeColor);
-  observer.observe(html, { attributes: true, attributeFilter: ['class'] });
-  updateThemeColor();
-})();`;
+  title: "HelenusAI - AI Crypto Chat Platform",
+  description: "Rebalance your crypto portfolio with AI-powered insights",
+    generator: 'v0.dev'
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: THEME_COLOR_SCRIPT,
-          }}
-        />
-      </head>
-      <body className="antialiased">
-        <PrivyAuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster position="top-center" />
-            {children}
-          </ThemeProvider>
-        </PrivyAuthProvider>
+      <body className={`${inter.variable} font-sans`}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
+
+
+
+import './globals.css'

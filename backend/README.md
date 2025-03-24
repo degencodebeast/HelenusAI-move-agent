@@ -1,68 +1,62 @@
-# HelenusAI Backend
+# HelenusAI Move Agent - TypeScript Backend
 
-## Installation Guide
+A TypeScript implementation of HelenusAI using Move Agent Kit to interact with Move-based blockchains.
 
-### Prerequisites
-- [pyenv](https://github.com/pyenv/pyenv) for Python version management
-- [Poetry](https://python-poetry.org/docs/) for dependency management
+## Features
 
-### Step 1: Install pyenv
+- Interact with Move-based blockchains using the Move Agent Kit
+- Check balances of addresses
+- Transfer tokens between addresses
+- Process natural language queries using LLM integration
 
-#### macOS
-```bash
-# Using Homebrew
-brew update
-brew install pyenv
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-source ~/.zshrc
+## Prerequisites
+
+- Node.js 18 or higher
+- npm or yarn
+- Anthropic API key
+- Aptos private key
+
+## Setup
+
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Create a `.env` file based on `.env.example`:
+   ```
+   APTOS_NETWORK=devnet
+   APTOS_PRIVATE_KEY=your-private-key
+   ANTHROPIC_API_KEY=your-anthropic-api-key
+   PORT=8000
+   ```
+
+## Running the Application
+
+Development mode:
+```
+npm run dev
 ```
 
-#### Linux
-```bash
-curl https://pyenv.run | bash
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-source ~/.bashrc
+Production mode:
+```
+npm run build
+npm start
 ```
 
-### Step 2: Set up Python using pyenv
-```bash
-# Install Python 3.10 (or your required version)
-pyenv install 3.10.0
+## API Endpoints
 
-# Navigate to project directory
-cd rebalancr/backend
+- `GET /api/balance/:address` - Get balance of an address
+- `POST /api/transfer` - Transfer tokens
+  - Request body: `{ "recipientAddress": "0x...", "amount": "10" }`
+- `POST /api/query` - Process a natural language query
+  - Request body: `{ "query": "What is my balance?" }`
 
-# Set local Python version
-pyenv local 3.10.0
-```
+## WebSocket
 
-### Step 3: Install Poetry
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-```
+- Connect to `/ws/query` to interact with the agent in real-time
+- Send message: `{ "query": "Transfer 10 APT to 0x..." }`
 
-### Step 4: Install project dependencies
-```bash
-# Clone the repository (if you haven't already)
-git clone https://github.com/degencodebeast/helenusAI.git
-cd src/backend
+## License
 
-# Install dependencies
-poetry install
-```
-
-## Running the Server
-
-```bash
-# Activate the Poetry environment
-poetry shell
-
-# Start the FastAPI server
-uvicorn rebalancr.api.app:app --reload --host 0.0.0.0 --port 8000
-```
-
-The server will be available at http://localhost:8000 with WebSocket endpoint at ws://localhost:8000/ws.
+MIT 

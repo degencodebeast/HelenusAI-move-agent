@@ -1,6 +1,15 @@
 "use client"
 
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts"
+import dynamic from 'next/dynamic'
+import { ErrorBoundary } from 'react-error-boundary'
+
+// Dynamically import recharts with no SSR
+const PieChart = dynamic(() => import('recharts').then(mod => mod.PieChart), { ssr: false })
+const Pie = dynamic(() => import('recharts').then(mod => mod.Pie), { ssr: false })
+const Cell = dynamic(() => import('recharts').then(mod => mod.Cell), { ssr: false })
+const Legend = dynamic(() => import('recharts').then(mod => mod.Legend), { ssr: false })
+const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false })
+const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false })
 
 const data = [
   { name: "Bitcoin", value: 45, color: "#FF9F00" },
@@ -10,40 +19,48 @@ const data = [
   { name: "Others", value: 5, color: "#1E2659" },
 ]
 
+function ChartErrorFallback({ error }: { error: Error }) {
+  return (
+    <div className="flex items-center justify-center h-[250px] text-red-500">
+      <p>Error loading chart: {error.message}</p>
+    </div>
+  )
+}
+
 export function AssetAllocation() {
   return (
     <div className="glass-card p-6 animate-fade-in opacity-0 animate-once stagger-1">
       <h3 className="text-xl font-semibold mb-6">Asset Allocation</h3>
 
       <div className="flex flex-col md:flex-row items-center">
-        <div className="w-full md:w-1/2 h-[250px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie data={data} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={(value: any) => [`${value}%`, "Allocation"]}
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  border: "none",
-                  borderRadius: "0.5rem",
-                  boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                }}
-              />
-              <Legend
-                layout="vertical"
-                verticalAlign="middle"
-                align="right"
-                verticalAlign="middle"
-                align="right"
-                formatter={(value) => <span className="text-sm">{value}</span>}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+        <ErrorBoundary FallbackComponent={ChartErrorFallback}>
+          <div className="w-full md:w-1/2 h-[250px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie data={data} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  formatter={(value: any) => [`${value}%`, "Allocation"]}
+                  contentStyle={{
+                    backgroundColor: "#fff",
+                    border: "none",
+                    borderRadius: "0.5rem",
+                    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                  }}
+                />
+                <Legend
+                  layout="vertical"
+                  verticalAlign="middle"
+                  align="right"
+                  formatter={(value) => <span className="text-sm">{value}</span>}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </ErrorBoundary>
 
         <div className="w-full md:w-1/2 mt-6 md:mt-0">
           <div className="space-y-4">

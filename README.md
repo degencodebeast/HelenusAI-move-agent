@@ -27,11 +27,6 @@ HelenusAI solves these challenges through three innovative components:
    - Risk-aware trade execution
    - Performance tracking and optimization
 
-3. **Kuru DEX Integration**
-   - Orderbook-based execution for better pricing
-   - Sub-second finality on Monad
-   - MEV-protected trading
-
 ## 🧠 AI-Powered Portfolio Management
 
 HelenusAI leverages advanced AI through multiple components:
@@ -202,18 +197,18 @@ class RiskManager:
 git clone https://github.com/degencodebeast/HelenusAI.git
 cd backend
 
-# Install dependencies using Poetry
-poetry install
+# # Install dependencies using Poetry
+# poetry install
 
-# Configure environment
-cp c .env
-# Edit .env with your API keys and settings
+# # Configure environment
+# cp c .env
+# # Edit .env with your API keys and settings
 
-# Activate virtual environment
-poetry shell
+# # Activate virtual environment
+# poetry shell
 
-# Run tests
-poetry run pytest
+# # Run tests
+# poetry run pytest
 ```
 
 ## 📚 Documentation

@@ -43,11 +43,11 @@ export function ChatInterface() {
     // Simulate AI response
     setTimeout(() => {
       const responses = [
-        "Based on your portfolio, I recommend diversifying into some layer-2 solutions like Polygon or Arbitrum to reduce Ethereum gas fees while maintaining exposure to the ecosystem.",
-        "Looking at current market trends, Bitcoin's dominance is increasing. Consider allocating more of your portfolio to BTC in the short term.",
-        "Your current risk level is moderate. If you're looking for more aggressive growth, consider adding some positions in DeFi protocols with strong fundamentals.",
-        "I've analyzed your trading patterns, and you might be overtrading. Consider a more long-term holding strategy to reduce fees and potential tax implications.",
-        "The upcoming Ethereum upgrade could significantly impact your portfolio. Would you like me to explain how it might affect your specific holdings?",
+        "Based on your portfolio analysis, I recommend exploring Aptos DeFi protocols like Liquidswap and Pancake Swap to optimize your trading and yield opportunities.",
+        "Looking at current market trends on Aptos, the ecosystem is growing rapidly. Consider allocating more of your portfolio to APT tokens and Aptos-native projects.",
+        "Your current risk level is moderate. If you're looking for more aggressive growth, consider adding positions in Move-based DeFi protocols with strong fundamentals on Aptos.",
+        "I've analyzed your trading patterns on Aptos, and you might benefit from utilizing Move's resource-oriented programming model for more efficient trades and lower fees.",
+        "The upcoming Aptos protocol upgrades could significantly impact DeFi opportunities. Would you like me to explain how these changes might affect your specific holdings?",
       ]
 
       const randomResponse = responses[Math.floor(Math.random() * responses.length)]
@@ -141,7 +141,7 @@ export function ChatInterface() {
           </button>
         </div>
         <p className="text-xs text-center mt-2 text-brand-darkGray/60">
-          CryptoGPT may produce inaccurate information about market trends or recommendations.
+          HelenusAI may produce inaccurate information about market trends or recommendations.
         </p>
       </div>
     </div>

@@ -1,17 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import dynamic from 'next/dynamic'
 import { ErrorBoundary } from 'react-error-boundary'
-
-// Dynamically import recharts with no SSR
-const AreaChart = dynamic(() => import('recharts').then(mod => mod.AreaChart), { ssr: false })
-const Area = dynamic(() => import('recharts').then(mod => mod.Area), { ssr: false })
-const XAxis = dynamic(() => import('recharts').then(mod => mod.XAxis), { ssr: false })
-const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: false })
-const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false })
-const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false })
-const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false })
+import { ChartComponents, ChartContainer } from "@/components/ui/chart-components"
 
 const dummyData = [
   { name: "Jan", value: 24000 },
@@ -66,44 +57,42 @@ export function PortfolioChart() {
       </div>
 
       <ErrorBoundary FallbackComponent={ChartErrorFallback}>
-        <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={dummyData} margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
-              <defs>
-                <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0066A5" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#0066A5" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#6b7280" }} />
-              <YAxis
-                axisLine={false}
-                tickLine={false}
-                tick={{ fontSize: 12, fill: "#6b7280" }}
-                tickFormatter={(value) => `$${value.toLocaleString()}`}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#fff",
-                  border: "none",
-                  borderRadius: "0.5rem",
-                  boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                }}
-                formatter={(value: any) => [`$${value.toLocaleString()}`, "Value"]}
-                labelStyle={{ color: "#1f2937", fontWeight: 600 }}
-              />
-              <Area
-                type="monotone"
-                dataKey="value"
-                stroke="#0066A5"
-                strokeWidth={2}
-                fillOpacity={1}
-                fill="url(#colorGradient)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+        <ChartContainer className="h-[300px] w-full">
+          <ChartComponents.AreaChart data={dummyData} margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
+            <defs>
+              <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#0066A5" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#0066A5" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <ChartComponents.CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+            <ChartComponents.XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#6b7280" }} />
+            <ChartComponents.YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 12, fill: "#6b7280" }}
+              tickFormatter={(value: number) => `$${value.toLocaleString()}`}
+            />
+            <ChartComponents.Tooltip
+              contentStyle={{
+                backgroundColor: "#fff",
+                border: "none",
+                borderRadius: "0.5rem",
+                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+              }}
+              formatter={(value: number) => [`$${value.toLocaleString()}`, "Value"]}
+              labelStyle={{ color: "#1f2937", fontWeight: 600 }}
+            />
+            <ChartComponents.Area
+              type="monotone"
+              dataKey="value"
+              stroke="#0066A5"
+              strokeWidth={2}
+              fillOpacity={1}
+              fill="url(#colorGradient)"
+            />
+          </ChartComponents.AreaChart>
+        </ChartContainer>
       </ErrorBoundary>
     </div>
   )
